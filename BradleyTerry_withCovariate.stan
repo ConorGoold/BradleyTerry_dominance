@@ -18,7 +18,6 @@ for(n in 1:N_dyads) {
 
 parameters{
 vector[N_ids] d_raw;                  // latent dominance value parameter
-//real d_alpha;
 vector[P] Beta;                   // beta coefficients
 real<lower=0> sigma;        // standard deviation of dominance values
 }
@@ -35,7 +34,6 @@ vector[N_dyads] p;        // local parameter
 
 Beta ~ normal(0, 1);
 sigma ~ cauchy(0, 2);
-//d_alpha ~ normal(0, 1);
 
 d_raw ~ normal( 0, 1 );
 

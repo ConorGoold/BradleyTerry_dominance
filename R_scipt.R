@@ -99,6 +99,11 @@ fit_stan2 <- stan(file = "BradleyTerry_withCovariate.stan",
 
 print(fit_stan2)
 
+# NB: Stan tells us that there are a number of divergent transitions, indicating problems
+## in the convergence of the MCMC chains. Using the non-centered parameterisation doesn't get rid 
+## of the divergent transitions. This may occur because of the large number of 'missing' dyads, where
+## no interactions are observed. 
+
 p_samples <- as.data.frame(fit_stan2)
 
 #=========== Re-create figure 2 ===============================================
