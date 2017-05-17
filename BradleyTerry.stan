@@ -37,5 +37,5 @@ for( n in 1:N_dyads) {
   p[n] = inv_logit( d_fix[ ind1[n] ] - d_fix[ ind2[n] ] );
  }
 
-  win1 ~ binomial( n_ints , p );
+  win1 ~ binomial( n_ints , p );    // vectorised
 }
