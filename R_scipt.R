@@ -87,13 +87,13 @@ d2$ind2 <- unlist(ind2_new)
 d2_ages$ageZ <- (d2_ages$age - mean(d2_ages$age))/sd(d2_ages$age)
 X_mat = as.matrix(d2_ages$ageZ)
 
-stan_data_list <- list(N_dyads = nrow(d2), N_ids = length(unique(d2$ind1))+1,
+stan_data_list2 <- list(N_dyads = nrow(d2), N_ids = length(unique(d2$ind1))+1,
                        ind1 = d2$ind1, ind2 = d2$ind2, 
                        win1 = d2$win1, win2 = d2$win2, 
                        X = X_mat, P = ncol(X_mat) ) 
 
 fit_stan2 <- stan(file = "BradleyTerry_withCovariate.stan", 
-                  data = stan_data_list, 
+                  data = stan_data_list2, 
                   chains = 4, cores = 4, iter = 5000, warmup = 2500
 )
 
@@ -101,8 +101,8 @@ print(fit_stan2)
 
 # NB: Stan tells us that there are a number of divergent transitions, indicating problems
 ## in the convergence of the MCMC chains. Using the non-centered parameterisation doesn't get rid 
-## of the divergent transitions. This may occur because of the large number of 'missing' dyads, where
-## no interactions are observed. 
+## of the divergent transitions. This may occur because of the large number of dyads where one individual
+## wins all the encounters. 
 
 p_samples <- as.data.frame(fit_stan2)
 
@@ -129,9 +129,9 @@ plotting_df <- data.frame(id = 1:20,
 
 ggplot(plotting_df, aes(age, mu)) + 
   geom_line() + 
-  geom_point(aes(age, dom_mu, group=id), position = position_dodge(0.5)) + 
+  geom_point(aes(age, dom_mu, group=id), position = position_dodge(0.2)) + 
   geom_errorbar(aes(ymin=dom_low, ymax=dom_high, group=id), 
-                width=0, position = position_dodge(0.5)) + 
+                width=0, position = position_dodge(0.2)) + 
   labs(x = "age", y="dominance value") + 
   theme_bw() + 
   theme(panel.grid = element_blank())
