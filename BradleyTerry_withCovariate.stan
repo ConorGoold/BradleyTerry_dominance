@@ -34,7 +34,6 @@ vector[N_dyads] p;        // local parameter
 
 Beta ~ normal(0, 1);
 sigma ~ cauchy(0, 2);
-
 d_raw ~ normal( 0, 1 );
 
 for( n in 1:N_dyads) {
